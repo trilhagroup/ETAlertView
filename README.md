@@ -52,4 +52,4 @@ Just open an issue on Github and we'll get to it as soon as possible.
 
 About
 --------
-**ETAlertView** is brought to you by Estúdio Trilha.
+**ETAlertView** is brought to you by Trilha.
