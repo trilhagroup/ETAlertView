@@ -1,6 +1,6 @@
 //
 //  ETAlertView.m
-//  InEvent
+//  WIFIT
 //
 //  Created by Pedro Góes on 14/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -56,7 +56,9 @@
 - (void)configureView {
     [self addSubview:[[[NSBundle mainBundle] loadNibNamed:@"ETAlertView" owner:self options:nil] objectAtIndex:0]];
     
+    // Master
     [_masterView setExclusiveTouch:YES];
+    [_masterView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
     
     // Box
     [_box setBackgroundColor:[UIColor colorWithWhite:0.165 alpha:1.000]];
@@ -80,6 +82,8 @@
     [_message.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_message setTitleColor:[UIColor colorWithWhite:0.165 alpha:1.000] forState:UIControlStateNormal];
 }
+
+#pragma mark - Public Methods
 
 - (void)show {
     
@@ -108,6 +112,8 @@
 //    [self pulse];
 }
 
+#pragma mark - Private Methods
+
 - (IBAction)removeView:(id)sender {
     
     // Listen to window frame changes
@@ -124,6 +130,10 @@
     [UIView transitionWithView:self duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         [self removeFromSuperview];
     } completion:NULL];
+}
+
+- (void)dismissKeyboard {
+    [_textField resignFirstResponder];
 }
 
 - (void)pulse {
@@ -146,6 +156,14 @@
 										  }];
 					 }];
     
+}
+
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 #pragma mark - Rotation
