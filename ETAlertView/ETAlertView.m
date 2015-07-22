@@ -1,6 +1,6 @@
 //
 //  ETAlertView.m
-//  WIFIT
+//  InEvent
 //
 //  Created by Pedro Góes on 14/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -40,11 +40,11 @@
     self.delegate = delegate;
     
     [_title setText:title];
-    [_message setTitle:message forState:UIControlStateNormal];
+    [_mainMessage setText:message];
     [_yesButton setTitle:otherButtonTitle forState:UIControlStateNormal];
     
     if (cancelButtonTitle == nil) {
-        [_yesButton setFrame:CGRectMake(_noButton.frame.origin.x, _noButton.frame.origin.y, _message.frame.size.width, _yesButton.frame.size.height)];
+        [_yesButton setFrame:CGRectMake(_noButton.frame.origin.x, _noButton.frame.origin.y, _mainMessage.frame.size.width, _yesButton.frame.size.height)];
         [_noButton removeFromSuperview];
     } else {
         [_noButton setTitle:cancelButtonTitle forState:UIControlStateNormal];
@@ -56,9 +56,7 @@
 - (void)configureView {
     [self addSubview:[[[NSBundle mainBundle] loadNibNamed:@"ETAlertView" owner:self options:nil] objectAtIndex:0]];
     
-    // Master
     [_masterView setExclusiveTouch:YES];
-    [_masterView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
     
     // Box
     [_box setBackgroundColor:[UIColor colorWithWhite:0.165 alpha:1.000]];
@@ -79,11 +77,8 @@
     [_title setTextColor:[UIColor colorWithWhite:0.965 alpha:1.000]];
     
     // Message
-    [_message.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_message setTitleColor:[UIColor colorWithWhite:0.165 alpha:1.000] forState:UIControlStateNormal];
+    [_mainMessage setTextColor:[UIColor colorWithWhite:0.165 alpha:1.000]];
 }
-
-#pragma mark - Public Methods
 
 - (void)show {
     
@@ -112,8 +107,6 @@
 //    [self pulse];
 }
 
-#pragma mark - Private Methods
-
 - (IBAction)removeView:(id)sender {
     
     // Listen to window frame changes
@@ -130,10 +123,6 @@
     [UIView transitionWithView:self duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         [self removeFromSuperview];
     } completion:NULL];
-}
-
-- (void)dismissKeyboard {
-    [_textField resignFirstResponder];
 }
 
 - (void)pulse {
@@ -156,14 +145,6 @@
 										  }];
 					 }];
     
-}
-
-#pragma mark - Text Field Delegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    
-    return YES;
 }
 
 #pragma mark - Rotation

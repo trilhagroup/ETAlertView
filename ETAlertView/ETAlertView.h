@@ -1,6 +1,6 @@
 //
 //  ETAlertView.h
-//  WIFIT
+//  InEvent
 //
 //  Created by Pedro Góes on 14/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -17,14 +17,13 @@
 
 @end
 
-@interface ETAlertView : UIView <UITextFieldDelegate>
+@interface ETAlertView : UIView
 
 @property (strong, nonatomic) IBOutlet UIView *masterView;
 @property (strong, nonatomic) IBOutlet UIView *box;
 @property (strong, nonatomic) IBOutlet UILabel *title;
 @property (strong, nonatomic) IBOutlet UIView *messageBox;
-@property (strong, nonatomic) IBOutlet UIButton *message;
-@property (strong, nonatomic) IBOutlet UITextField *textField;
+@property (strong, nonatomic) IBOutlet UITextView *mainMessage;
 @property (strong, nonatomic) IBOutlet UIButton *yesButton;
 @property (strong, nonatomic) IBOutlet UIButton *noButton;
 @property (assign, nonatomic) NSInteger errorCode;
