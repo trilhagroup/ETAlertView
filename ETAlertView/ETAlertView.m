@@ -31,7 +31,34 @@
     return self;
 }
 
-#pragma mark - User Methods
+#pragma mark - Configuration Methods
+
+- (void)configureView {
+    [self addSubview:[[[NSBundle mainBundle] loadNibNamed:@"ETAlertView" owner:self options:nil] objectAtIndex:0]];
+    
+    // Master
+    [_masterView setExclusiveTouch:YES];
+    [_masterView setBackgroundColor: [UIColor colorWithRed:0.38 green:0.38 blue:0.38 alpha:0.7]];
+    
+    // Box
+    [_box.layer setCornerRadius:10.0];
+    [_box.layer setShadowOffset:CGSizeMake(0.0, 1.0)];
+    [_box.layer setShadowOpacity:1.0];
+    [_box.layer setShadowRadius:1.0];
+    [_box.layer setMasksToBounds:NO];
+    
+    // Message Box
+    [_messageBox.layer setCornerRadius:10.0];
+    [_messageBox.layer setMasksToBounds:NO];
+    
+    // Title
+    [_title setTextColor:[UIColor colorWithWhite:0.165 alpha:1.000]];
+    
+    // Message
+    [_mainMessage setTextColor:[UIColor colorWithWhite:0.165 alpha:1.000]];
+}
+
+#pragma mark - Initialization Methods
 
 - (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id<ETAlertViewDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle {
     
@@ -53,32 +80,7 @@
     return self;
 }
 
-- (void)configureView {
-    [self addSubview:[[[NSBundle mainBundle] loadNibNamed:@"ETAlertView" owner:self options:nil] objectAtIndex:0]];
-    
-    [_masterView setExclusiveTouch:YES];
-    
-    // Box
-    [_box setBackgroundColor:[UIColor colorWithWhite:0.165 alpha:1.000]];
-    [_box.layer setCornerRadius:10.0];
-    [_box.layer setShadowColor:[[UIColor colorWithWhite:0.145 alpha:1.000] CGColor]];
-    [_box.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
-    [_box.layer setShadowOpacity:1.0];
-    [_box.layer setShadowRadius:1.0];
-    [_box.layer setMasksToBounds:NO];
-    [_box.layer setBorderWidth:4.0];
-    [_box.layer setBorderColor:[[UIColor colorWithWhite:0.165 alpha:1.000] CGColor]];
-    
-    // Message Box
-    [_messageBox.layer setCornerRadius:6.0];
-    [_messageBox.layer setMasksToBounds:NO];
-    
-    // Title
-    [_title setTextColor:[UIColor colorWithWhite:0.965 alpha:1.000]];
-    
-    // Message
-    [_mainMessage setTextColor:[UIColor colorWithWhite:0.165 alpha:1.000]];
-}
+#pragma mark - User Methods
 
 - (void)show {
     

@@ -31,8 +31,6 @@
 @property (strong, nonatomic) id<ETAlertViewDelegate> delegate;
 
 - (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id<ETAlertViewDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle;
-
-- (void)configureView;
 - (void)show;
 
 @end
