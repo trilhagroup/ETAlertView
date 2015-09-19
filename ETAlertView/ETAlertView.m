@@ -60,21 +60,34 @@
 
 #pragma mark - Initialization Methods
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id<ETAlertViewDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle {
-    
+- (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle {
+    return [self initWithTitle:title message:message negativeButtonTitle:nil positiveButtonTitle:confirmationButtonTitle];
+}
+
+- (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle confirmationBlock:(void (^)(void))confirmationBlock {
+    return [self initWithTitle:title message:message negativeButtonTitle:nil positiveButtonTitle:confirmationButtonTitle negativeBlock:nil positiveBlock:confirmationBlock];
+}
+
+- (id)initWithTitle:(NSString *)title message:(NSString *)message negativeButtonTitle:(NSString *)negativeButtonTitle positiveButtonTitle:(NSString *)positiveButtonTitle {
+    return [self initWithTitle:title message:message negativeButtonTitle:negativeButtonTitle positiveButtonTitle:positiveButtonTitle negativeBlock:nil positiveBlock:nil];
+}
+
+- (id)initWithTitle:(NSString *)title message:(NSString *)message negativeButtonTitle:(NSString *)negativeButtonTitle positiveButtonTitle:(NSString *)positiveButtonTitle negativeBlock:(void (^)(void))negativeBlock positiveBlock:(void (^)(void))positiveBlock {
+
     self = [self initWithFrame:CGRectZero];
     
-    self.delegate = delegate;
+    _leftBlock = negativeBlock;
+    _rightBlock = positiveBlock;
     
     [_title setText:title];
     [_mainMessage setText:message];
-    [_yesButton setTitle:otherButtonTitle forState:UIControlStateNormal];
+    [_rightButton setTitle:positiveButtonTitle forState:UIControlStateNormal];
     
-    if (cancelButtonTitle == nil) {
-        [_yesButton setFrame:CGRectMake(_noButton.frame.origin.x, _noButton.frame.origin.y, _mainMessage.frame.size.width, _yesButton.frame.size.height)];
-        [_noButton removeFromSuperview];
+    if (negativeButtonTitle == nil) {
+        [_rightButton setFrame:CGRectMake(_leftButton.frame.origin.x, _leftButton.frame.origin.y, _mainMessage.frame.size.width, _rightButton.frame.size.height)];
+        [_leftButton removeFromSuperview];
     } else {
-        [_noButton setTitle:cancelButtonTitle forState:UIControlStateNormal];
+        [_leftButton setTitle:negativeButtonTitle forState:UIControlStateNormal];
     }
     
     return self;
@@ -114,12 +127,11 @@
     // Listen to window frame changes
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIApplicationDidChangeStatusBarFrameNotification" object:nil];
     
-    if ([_delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
-        if ((UIButton *)sender == _noButton) {
-            [_delegate alertView:self clickedButtonAtIndex:0];
-        } else {
-            [_delegate alertView:self clickedButtonAtIndex:1];
-        }
+    // Call our callbacks
+    if ((UIButton *)sender == _leftButton && _leftBlock != nil) {
+        _leftBlock();
+    } else if ((UIButton *)sender == _rightButton && _rightBlock != nil) {
+        _rightBlock();
     }
     
     [UIView transitionWithView:self duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{

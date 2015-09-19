@@ -16,7 +16,11 @@ How-to
 Programmatically, just use the following method:
 
 ```
-[[ETAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Oh oh.. It appears that our server is having some trouble. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
+
+- (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle confirmationBlock:(void (^)(void))confirmationBlock;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message negativeButtonTitle:(NSString *)negativeButtonTitle positiveButtonTitle:(NSString *)positiveButtonTitle;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message negativeButtonTitle:(NSString *)negativeButtonTitle positiveButtonTitle:(NSString *)positiveButtonTitle negativeBlock:(void (^)(void))negativeBlock positiveBlock:(void (^)(void))positiveBlock;
 ```
 
 And then show it onscreen:
@@ -25,12 +29,15 @@ And then show it onscreen:
 [alertView show];
 ```
 
-### Delegates
+### Example
 
 There are some delegates you can implement as callbacks:
 
 ```
-- (void)alertView:(ETAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+        // Alert message
+        [[[ETAlertView alloc] initWithTitle:NSLocalizedString(@"Confirmation", nil) message:NSLocalizedString(@"Are you sure you want to remove it?", nil) negativeButtonTitle:NSLocalizedString(@"No", nil) positiveButtonTitle:NSLocalizedString(@"Yes", nil) negativeBlock:nil positiveBlock:^{
+            // Commands and requests
+        }] show];
 ```
 
 ### Getters
@@ -42,9 +49,8 @@ There are some properties you can have access to. Accessible at anytime, just KV
 - `@property (strong, nonatomic) IBOutlet UILabel *title;`
 - `@property (strong, nonatomic) IBOutlet UIView *messageBox;`
 - `@property (strong, nonatomic) IBOutlet UIButton *message;`
-- `@property (strong, nonatomic) IBOutlet UIButton *yesButton;`
-- `@property (strong, nonatomic) IBOutlet UIButton *noButton;`
-- `@property (assign, nonatomic) NSInteger errorCode;`
+- `@property (strong, nonatomic) IBOutlet UIButton *leftButton;`
+- `@property (strong, nonatomic) IBOutlet UIButton *rightButton;`
 
 Support
 --------

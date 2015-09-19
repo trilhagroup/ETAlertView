@@ -8,15 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class ETAlertView;
-
-@protocol ETAlertViewDelegate <NSObject>
-@optional
-
-- (void)alertView:(ETAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
-
-@end
-
 @interface ETAlertView : UIView
 
 @property (strong, nonatomic) IBOutlet UIView *masterView;
@@ -24,13 +15,17 @@
 @property (strong, nonatomic) IBOutlet UILabel *title;
 @property (strong, nonatomic) IBOutlet UIView *messageBox;
 @property (strong, nonatomic) IBOutlet UITextView *mainMessage;
-@property (strong, nonatomic) IBOutlet UIButton *yesButton;
-@property (strong, nonatomic) IBOutlet UIButton *noButton;
-@property (assign, nonatomic) NSInteger errorCode;
+@property (strong, nonatomic) IBOutlet UIButton *leftButton;
+@property (strong, nonatomic) IBOutlet UIButton *rightButton;
 
-@property (strong, nonatomic) id<ETAlertViewDelegate> delegate;
+@property (strong, nonatomic) void (^leftBlock)(void);
+@property (strong, nonatomic) void (^rightBlock)(void);
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id<ETAlertViewDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle confirmationBlock:(void (^)(void))confirmationBlock;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message negativeButtonTitle:(NSString *)negativeButtonTitle positiveButtonTitle:(NSString *)positiveButtonTitle;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message negativeButtonTitle:(NSString *)negativeButtonTitle positiveButtonTitle:(NSString *)positiveButtonTitle negativeBlock:(void (^)(void))negativeBlock positiveBlock:(void (^)(void))positiveBlock;
+
 - (void)show;
 
 @end
