@@ -16,7 +16,6 @@ How-to
 Programmatically, just use the following method:
 
 ```
-
 - (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle;
 - (id)initWithTitle:(NSString *)title message:(NSString *)message confirmationButtonTitle:(NSString *)confirmationButtonTitle confirmationBlock:(void (^)(void))confirmationBlock;
 - (id)initWithTitle:(NSString *)title message:(NSString *)message negativeButtonTitle:(NSString *)negativeButtonTitle positiveButtonTitle:(NSString *)positiveButtonTitle;
