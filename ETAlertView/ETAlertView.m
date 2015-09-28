@@ -98,7 +98,7 @@
 - (void)show {
     
     // Get our key window
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIWindow *keyWindow = [UIApplication sharedApplication].delegate.window;
     
     // Get all the bounds
     CGRect bounds = [[UIScreen mainScreen] bounds];
@@ -118,8 +118,6 @@
     [UIView transitionWithView:keyWindow duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         [keyWindow addSubview:self];
     } completion:NULL];
-    
-//    [self pulse];
 }
 
 - (IBAction)removeView:(id)sender {
