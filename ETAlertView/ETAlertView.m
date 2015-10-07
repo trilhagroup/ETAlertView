@@ -21,14 +21,13 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (void)awakeFromNib
 {
-    self = [super initWithCoder:aDecoder];
+    [super awakeFromNib];
     if (self) {
         // Initialization code
         [self configureView];
     }
-    return self;
 }
 
 #pragma mark - Configuration Methods
