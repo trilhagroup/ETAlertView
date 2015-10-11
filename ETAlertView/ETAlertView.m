@@ -37,7 +37,7 @@
     
     // Master
     [_masterView setExclusiveTouch:YES];
-    [_masterView setBackgroundColor: [UIColor colorWithRed:0.38 green:0.38 blue:0.38 alpha:0.7]];
+    [_masterView setBackgroundColor:[UIColor colorWithRed:0.38 green:0.38 blue:0.38 alpha:0.7]];
     
     // Box
     [_box.layer setCornerRadius:10.0];
