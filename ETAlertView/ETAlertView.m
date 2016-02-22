@@ -121,6 +121,20 @@
 
 - (IBAction)removeView:(id)sender {
     
+    // Get our key window
+    UIWindow *keyWindow = [UIApplication sharedApplication].delegate.window;
+    
+    // Look for previous alerts and remove if it has no actions
+    if (sender != nil) {
+        for (ETAlertView *view in keyWindow.subviews) {
+            if ([view isKindOfClass:[ETAlertView class]]) {
+                if (!(view.leftBlock && view.rightBlock)) {
+                    [view removeView:nil];
+                }
+            }
+        }
+    }
+    
     // Listen to window frame changes
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIApplicationDidChangeStatusBarFrameNotification" object:nil];
     
