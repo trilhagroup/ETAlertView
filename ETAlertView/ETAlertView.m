@@ -153,7 +153,7 @@
 - (void)pulse {
 	// pulse animation thanks to:  http://delackner.com/blog/2009/12/mimicking-uialertviews-animated-transition/
     self.transform = CGAffineTransformMakeScale(0.6, 0.6);
-	[UIView animateWithDuration: 0.2
+	[UIView animateWithDuration:0.2
 					 animations: ^{
 						 self.transform = CGAffineTransformMakeScale(1.1, 1.1);
 					 }
